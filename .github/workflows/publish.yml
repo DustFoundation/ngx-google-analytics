@@ -88,4 +88,4 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm publish ngx-google-analytics-${{ steps.get_version.outputs.VERSION }}.tgz
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
