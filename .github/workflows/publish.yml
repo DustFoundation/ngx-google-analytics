@@ -25,6 +25,6 @@ jobs:
         run: npm run build
 
       - name: Publish
-        run: npm publish projects/ngx-google-analytics --access public
+        run: npm publish ./projects/ngx-google-analytics --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
