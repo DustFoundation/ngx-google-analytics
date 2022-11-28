@@ -43,7 +43,7 @@ export class GoogleAnalyticsService {
   gtag(...args: any[]) {
     try {
       this._gtag(...args.filter(x => x !== undefined));
-    } catch (err) {
+    } catch (err: any) {
       this.throw(err);
     }
   }
@@ -63,7 +63,7 @@ export class GoogleAnalyticsService {
    * @param value An value to measure something
    * @param interaction If user interaction is performed
    */
-  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean) {
+  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean, options?: Object) {
     try {
       const opt = new Map<string, any>();
       if (category) {
@@ -78,13 +78,18 @@ export class GoogleAnalyticsService {
       if (interaction !== undefined) {
         opt.set('interaction', interaction);
       }
+      if (options) {
+        Object
+          .entries(options)
+          .map(([key, value]) => opt.set(key, value));
+      }      
       const params = this.toKeyValue(opt);
       if (params) {
         this.gtag('event', action as string, params);
       } else {
         this.gtag('event', action as string);
       }
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
@@ -121,7 +126,7 @@ export class GoogleAnalyticsService {
           .map(([key, value]) => opt.set(key, value));
       }
       this.gtag('config', this.settings.trackingCode, this.toKeyValue(opt));
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
@@ -156,7 +161,7 @@ export class GoogleAnalyticsService {
         opt.set('app_installer_id', installerId);
       }
       this.gtag('event', 'screen_view', this.toKeyValue(opt));
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
@@ -176,7 +181,7 @@ export class GoogleAnalyticsService {
   set(...options: Array<any>) {
     try {
       this._gtag('set', ...options);
-    } catch (err) {
+    } catch (err: any) {
       this.throw(err);
     }
   }
@@ -209,7 +214,7 @@ export class GoogleAnalyticsService {
       } else {
         this.gtag('event', 'exception');
       }
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
